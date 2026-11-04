@@ -1,0 +1,52 @@
+.triagent-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	height: 32px;
+	padding: 0 12px;
+	margin-right: 8px;
+	border: 1px solid var(--borderColor-default, #d0d7de);
+	border-radius: 6px;
+	background: var(--button-default-bgColor-rest, #f6f8fa);
+	color: var(--fgColor-default, #1f2328) !important;
+	font: 500 14px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	text-decoration: none !important;
+	white-space: nowrap;
+	cursor: pointer;
+	vertical-align: middle;
+}
+.triagent-btn:hover {
+	background: var(--button-default-bgColor-hover, #eaeef2);
+}
+.triagent-floating {
+	position: fixed;
+	right: 16px;
+	bottom: 16px;
+	z-index: 100;
+	margin: 0;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.triagent-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #8c959f;
+}
+.triagent-status {
+	color: var(--fgColor-muted, #656d76);
+	font-weight: 400;
+}
+.triagent-status:empty {
+	display: none;
+}
+.triagent-btn[data-tone="ok"] .triagent-dot { background: #1f883d; }
+.triagent-btn[data-tone="done"] .triagent-dot { background: #8250df; }
+.triagent-btn[data-tone="hot"] .triagent-dot { background: #cf222e; }
+.triagent-btn[data-tone="bad"] .triagent-dot { background: #bc4c00; }
+.triagent-btn[data-tone="busy"] .triagent-dot {
+	background: #bf8700;
+	animation: triagent-pulse 1.2s ease-in-out infinite;
+}
+@keyframes triagent-pulse {
+	50% { opacity: 0.3; }
+}
