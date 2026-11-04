@@ -1,23 +1,39 @@
 {
   "manifest_version": 3,
   "name": "Triagent for pi issues",
-  "version": "0.1.0",
-  "description": "Open earendil-works/pi issues and PRs in triagent with one click and show their triagent status.",
-  "permissions": ["storage"],
-  "host_permissions": ["https://triagent.pi.dev/*"],
-  "background": { "service_worker": "background.js" },
-  "action": { "default_title": "Open in triagent" },
+  "version": "0.2.0",
+  "description": "Triagent status on earendil-works/pi issues and PRs, in lists and on issue pages, with one-click open in triagent.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://triagent.pi.dev/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Open in triagent"
+  },
   "commands": {
     "_execute_action": {
-      "suggested_key": { "default": "Alt+Shift+T" },
+      "suggested_key": {
+        "default": "Alt+Shift+T"
+      },
       "description": "Open the current issue in triagent"
     }
   },
   "content_scripts": [
     {
-      "matches": ["https://github.com/earendil-works/pi/*"],
-      "js": ["content.js"],
-      "css": ["content.css"],
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
       "run_at": "document_idle"
     }
   ]
