@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Triagent for pi issues",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Triagent status on earendil-works/pi issues and PRs, in lists and on issue pages, with one-click open in triagent.",
   "permissions": [
     "storage"

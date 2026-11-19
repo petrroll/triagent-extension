@@ -54,6 +54,18 @@ function getIndex(fresh) {
 	return promise;
 }
 
+/**
+ * Research's call as a label: its priority, or "dup #N" when the issue is best closed as a duplicate. The server sends
+ * `{ priority, duplicateOf? }`; older servers sent the bare priority.
+ */
+function callLabel(call) {
+	if (call == null) return null;
+	if (typeof call === "string") return call;
+	if (typeof call !== "object") return null;
+	if (call.duplicateOf != null) return `dup #${call.duplicateOf}`;
+	return call.priority ?? null;
+}
+
 function fromIssueRow(row, list) {
 	return {
 		number: row.number,
@@ -61,7 +73,7 @@ function fromIssueRow(row, list) {
 		list,
 		research: row.research ?? null,
 		activity: row.research === "queued" || row.research === "running" ? "run" : null,
-		suggestion: row.suggestion ?? null,
+		suggestion: callLabel(row.suggestion),
 		category: row.category || "",
 		lowConfidence: !!row.lowConfidence,
 		duplicate: !!row.duplicate,
@@ -112,7 +124,7 @@ function fromItem(item) {
 		research: r?.status ?? null,
 		activity: r?.activity ?? null, // "run" | "answer" | null
 		error: r?.error ?? null,
-		suggestion: result?.suggestion ?? null,
+		suggestion: callLabel(item.suggestion ?? result?.suggestion),
 		category: item.decision?.category || result?.category || "",
 		lowConfidence: result?.confidence === "low",
 		duplicate: !!result?.duplicates?.some((d) => d.kind === "duplicate"),
@@ -123,7 +135,7 @@ function fromItem(item) {
 		unseenComments: (item.comments ?? []).filter((c) => c.unseen).length,
 		unseenEdit: !!item.unseenEdit,
 		suggestedAction: item.suggestedAction ?? null,
-		decision: item.decision?.priority ?? null,
+		decision: callLabel(item.decision?.priority ? item.decision : null),
 		decidedBy: item.decision?.by ?? null,
 		kindOf: result?.kind ?? null,
 		valid: result?.valid ?? null,

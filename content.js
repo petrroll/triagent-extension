@@ -58,9 +58,12 @@
 		else if (s.fix === "pr") out.push({ text: "fix PR", tone: "done", title: s.fixPr ? `Fix PR #${s.fixPr.number}` : "A fix PR is open" });
 		else if (s.fix === "wanted") out.push({ text: "fixing", tone: "busy", title: "A fix was requested" });
 		const action = ACTIONS[s.suggestedAction];
-		if (action) out.push(action);
+		const dupShown = !s.decision && s.suggestion?.startsWith("dup ");
+		if (action) {
+			if (!(dupShown && s.suggestedAction === "close_duplicate")) out.push(action);
+		}
 		else if (s.onMain === "fixed") out.push(ACTIONS.close_completed);
-		else if (s.duplicate) out.push({ text: "duplicate", tone: "muted", title: "Research found a duplicate" });
+		else if (s.duplicate && !dupShown) out.push({ text: "duplicate", tone: "muted", title: "Research found a duplicate" });
 		if (s.unseenComments) out.push(unseenPill(s.unseenComments));
 		if (s.unseenEdit) out.push({ text: "edited", tone: "accent", title: "Edited after research started" });
 		return out;
